@@ -7,24 +7,33 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>order-service</name>
+<description>module for ordering services</description>
 
+  <!--region versions-->
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <junit.version>5.10.0</junit.version>
     <reflections.version>0.10.2</reflections.version>
   </properties>
-<!--region reflections-->
+  <!--endregion-->
+
   <dependencies>
+
+    <!--region jupiter-->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
       <version>${junit.version}</version>
     </dependency>
+    <!--endregion-->
+
+    <!--region reflections-->
     <dependency>
       <groupId>org.reflections</groupId>
       <artifactId>reflections</artifactId>
       <version>${reflections.version}</version>
     </dependency>
+    <!--endregion-->
+
   </dependencies>
-  <!--endregion/-->
 </project>
