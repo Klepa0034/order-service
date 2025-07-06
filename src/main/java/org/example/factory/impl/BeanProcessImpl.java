@@ -11,7 +11,12 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class BeanProcessImpl implements BeanProcessFactory {
+    public BeanProcessImpl (Map<String, Object> beans) {
+        this.beans = beans;
+    }
+
     private Map<String, Object> beans;
+
     @Override
     public void initialize() throws InvocationTargetException, IllegalAccessException {
         Collection<Object> values = beans.values();
@@ -28,7 +33,7 @@ public class BeanProcessImpl implements BeanProcessFactory {
                     String typeName = declaredField.getType().getSimpleName() + "Impl";
                     Object o = beans.get(typeName);
                     for (int j = 0; j < declaredMethods.length; j++) {
-                        Method declaredMethod = declaredMethods[i];
+                        Method declaredMethod = declaredMethods[j];
                         String name = declaredField.getName();
                         if(!declaredMethod.getName().equals("set"+name.substring(0,1).toUpperCase()+name.substring(1))){
                             continue;
