@@ -35,6 +35,7 @@ public class BeanProcessImpl implements BeanProcessFactory {
                     for (int j = 0; j < declaredMethods.length; j++) {
                         Method declaredMethod = declaredMethods[j];
                         String name = declaredField.getName();
+                        declaredField.setAccessible(true);
                         if(!declaredMethod.getName().equals("set"+name.substring(0,1).toUpperCase()+name.substring(1))){
                             continue;
                         }
