@@ -5,6 +5,6 @@ public interface CustomArray<T> {
 
     void deleteElement(int index);
     void print();
-
-    void updateElement(int i, T c);
+     T getElement(int index);
+    void updateElement(int index, T value);
 }
