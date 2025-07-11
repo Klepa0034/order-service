@@ -1,6 +1,6 @@
 package org.example.factory.impl;
 
-import org.example.annotation.Component;
+import org.example.annatation.Component;
 import org.example.factory.BeanFactory;
 
 import java.lang.reflect.InvocationTargetException;
