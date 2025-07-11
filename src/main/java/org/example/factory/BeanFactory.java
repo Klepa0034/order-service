@@ -1,7 +1,5 @@
 package org.example.factory;
 
-import org.example.annotation.Component;
-
 import java.lang.reflect.InvocationTargetException;
 
 public interface BeanFactory {
