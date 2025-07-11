@@ -19,8 +19,8 @@ public class MapperImpl<T> implements Mapper<T> {
         CustomArray<T> customArray = new CustomArrayImpl<>();
         Field[] declaredFields = tClass.getDeclaredFields();
         Method[] declaredMethods = tClass.getDeclaredMethods();
+        Constructor<T> declaredConstructor = tClass.getDeclaredConstructor();
         while (resultSet.next()) {
-            Constructor<T> declaredConstructor = tClass.getDeclaredConstructor();
             T t = declaredConstructor.newInstance();
             for (int i = 0; i < declaredFields.length; i++) {
                 Field declaredField = declaredFields[i];
@@ -32,9 +32,9 @@ public class MapperImpl<T> implements Mapper<T> {
                         continue;
                     }
                     declaredMethod.invoke(t, object);
-
                 }
             }
+            customArray.addElement(t);
         }
         return customArray;
     }
