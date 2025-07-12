@@ -1,6 +1,7 @@
 package org.example.factory.impl;
 
-import org.example.annatation.Autowired;
+import org.example.annotation.Autowired;
+import org.example.annotation.Qualifier;
 import org.example.factory.BeanProcessFactory;
 
 import java.lang.reflect.Field;
@@ -30,7 +31,13 @@ public class BeanProcessImpl implements BeanProcessFactory {
                 Field declaredField = declaredFields[i];
                 boolean annotationPresent = declaredField.isAnnotationPresent(Autowired.class);
                 if (!annotationPresent) continue;
-                String typeName = declaredField.getType().getSimpleName() + "Impl";
+                String typeName;
+                if (declaredField.isAnnotationPresent(Qualifier.class)) {
+                    Qualifier annotation = declaredField.getAnnotation(Qualifier.class);
+                    typeName = annotation.name();
+                } else {
+                    typeName = declaredField.getType().getSimpleName() + "Impl";
+                }
                 Object o = beans.get(typeName);
                 for (int j = 0; j < declaredMethods.length; j++) {
                     Method declaredMethod = declaredMethods[j];
