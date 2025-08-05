@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <!-- Включение всех файлов изменений по порядку -->
+    <include file="db/changelog/master-changelog.xml" relativeToChangelogFile="false"/>
+    <include file="OR-1-add-mock-customers.xml" relativeToChangelogFile="true"/>
+    <include file="OR-2-add-mock-orders.xml" relativeToChangelogFile="true"/>
+    <include file="OR-3-add-mock-items.xml" relativeToChangelogFile="true"/>
+    <include file="OR-4-add-mock-order_items.xml" relativeToChangelogFile="true"/>
+</databaseChangeLog>

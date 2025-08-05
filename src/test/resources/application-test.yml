@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: order-service
+  datasource:
+   url: jdbc:postgresql://localhost:5432/order_db
+   username: postgres
+   password: password
+   driver-class-name: org.postgresql.Driver
+  liquibase:
+    change-log: db/changelog/master-test-changelog.xml

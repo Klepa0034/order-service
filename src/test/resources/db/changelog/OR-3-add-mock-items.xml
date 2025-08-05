@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+   <changeSet id="OR-3-add-mock-items" author="klepa0034">
+       <insert tableName="items">
+           <column name="name">dfsdf</column>
+           <column name="cost">23232</column>
+       </insert>
+       <insert tableName="items">
+           <column name="name">ddddd</column>
+           <column name="cost">1121</column>
+       </insert>
+       <insert tableName="items">
+           <column name="name">saasa</column>
+           <column name="cost">3231</column>
+       </insert>
+   </changeSet>
+
+</databaseChangeLog>

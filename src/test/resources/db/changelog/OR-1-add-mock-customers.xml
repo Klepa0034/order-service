@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="OR-1-add-mock-customers" author="klepa0034">
+        <insert tableName="customers">
+            <column name="name">titi</column>
+            <column name="balance">2323</column>
+        </insert>
+        <insert tableName="customers">
+            <column name="name">zhopa</column>
+            <column name="balance">45678</column>
+        </insert>
+        <insert tableName="customers">
+            <column name="name">bibi</column>
+            <column name="balance">1234556</column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

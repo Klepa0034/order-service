@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id = "OR-2-create-table-customers" author="klepa0034">
+        <createTable tableName="orders">
+            <column name="id" type = "bigserial">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="customer_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="total_cost" type="numeric(10,2)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint
+                baseTableName="orders"
+                baseColumnNames="customer_id"
+                referencedTableName="customers"
+                referencedColumnNames="id"
+                constraintName="fk_orders_customers"/>
+    </changeSet>
+</databaseChangeLog>
