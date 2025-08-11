@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="OR-4-add-mock-order_items" author="klepa0034">
+        <insert tableName="order_items">
+            <column name="order_id">3</column>
+            <column name="item_id">1</column>
+        </insert>
+        <insert tableName="order_items">
+            <column name="order_id">4</column>
+            <column name="item_id">2</column>
+        </insert>
+        <insert tableName="order_items">
+            <column name="order_id">5</column>
+            <column name="item_id">3</column>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
