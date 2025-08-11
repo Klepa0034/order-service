@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Management</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: inline-block;
+      width: 100px;
+      font-weight: bold;
+    }
+    input {
+      padding: 8px;
+      width: 300px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    button {
+      padding: 8px 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+    button.delete {
+      background-color: #f44336;
+    }
+    button.edit {
+      background-color: #2196F3;
+    }
+    .action-buttons {
+      display: flex;
+      gap: 5px;
+    }
+    #customerForm {
+      background-color: #f5f5f5;
+      padding: 20px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+    h1, h2 {
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Customer Management</h1>
+
+  <div id="customerForm">
+    <h2 id="formTitle">Add New Customer</h2>
+    <input type="hidden" id="customerId">
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" id="name" required>
+    </div>
+    <div class="form-group">
+      <label for="balance">Balance:</label>
+      <input type="number" id="balance" step="0.01" required>
+    </div>
+    <button onclick="saveCustomer()">Save</button>
+    <button onclick="resetForm()">Cancel</button>
+  </div>
+
+  <h2>Customer List</h2>
+  <table id="customersTable">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Balance</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<script>
+  const API_BASE_URL = 'http://localhost:8081/api/customers';
+
+  // Загружаем клиентов при загрузке страницы
+  document.addEventListener('DOMContentLoaded', loadCustomers);
+
+  // Загрузка всех клиентов
+  async function loadCustomers() {
+    try {
+      const response = await fetch(API_BASE_URL);
+      if (!response.ok) {
+        throw new Error('Failed to fetch customers');
+      }
+      const customers = await response.json();
+      renderCustomers(customers);
+    } catch (error) {
+      console.error('Error loading customers:', error);
+      alert('Error loading customers. See console for details.');
+    }
+  }
+
+  // Отображение клиентов в таблице
+  function renderCustomers(customers) {
+    const tbody = document.querySelector('#customersTable tbody');
+    tbody.innerHTML = '';
+
+    customers.forEach(customer => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+                    <td>${customer.id}</td>
+                    <td>${customer.name}</td>
+                    <td>${customer.balance}</td>
+                    <td class="action-buttons">
+                        <button class="edit" onclick="editCustomer(${customer.id}, '${customer.name}', ${customer.balance})">Edit</button>
+                        <button class="delete" onclick="deleteCustomer(${customer.id})">Delete</button>
+                    </td>
+                `;
+      tbody.appendChild(row);
+    });
+  }
+
+  // Сохранение клиента (создание или обновление)
+  async function saveCustomer() {
+    const id = document.getElementById('customerId').value;
+    const name = document.getElementById('name').value;
+    const balance = document.getElementById('balance').value;
+
+    if (!name || !balance) {
+      alert('Please fill all fields');
+      return;
+    }
+
+    const customer = {
+      name: name,
+      balance: parseFloat(balance)
+    };
+
+    try {
+      let response;
+      if (id) {
+        // Обновление существующего клиента
+        customer.id = parseInt(id);
+        response = await fetch(`${API_BASE_URL}/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(customer)
+        });
+      } else {
+        // Создание нового клиента
+        response = await fetch(API_BASE_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(customer)
+        });
+      }
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // Обновляем список клиентов
+      loadCustomers();
+      // Сбрасываем форму
+      resetForm();
+    } catch (error) {
+      console.error('Error saving customer:', error);
+      alert('Error saving customer. See console for details.');
+    }
+  }
+
+  // Удаление клиента
+  async function deleteCustomer(id) {
+    if (!confirm('Are you sure you want to delete this customer?')) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/${id}`, {
+        method: 'DELETE'
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // Обновляем список клиентов
+      loadCustomers();
+    } catch (error) {
+      console.error('Error deleting customer:', error);
+      alert('Error deleting customer. See console for details.');
+    }
+  }
+
+  // Редактирование клиента
+  function editCustomer(id, name, balance) {
+    document.getElementById('formTitle').textContent = 'Edit Customer';
+    document.getElementById('customerId').value = id;
+    document.getElementById('name').value = name;
+    document.getElementById('balance').value = balance;
+  }
+
+  // Сброс формы
+  function resetForm() {
+    document.getElementById('formTitle').textContent = 'Add New Customer';
+    document.getElementById('customerId').value = '';
+    document.getElementById('name').value = '';
+    document.getElementById('balance').value = '';
+  }
+</script>
+</body>
+</html>

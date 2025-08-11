@@ -1,21 +1,13 @@
 package org.example.orderservice.mapper;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+
 import org.example.orderservice.dto.customer.CustomerDto;
 import org.example.orderservice.entity.Customer;
-import org.springframework.stereotype.Service;
-@Setter
-@Getter
-@ToString
-@Service
-public class CustomerMapper {
-    public CustomerDto customerToDto(Customer customer) {
-        return new CustomerDto();
-    }
+import org.hibernate.tool.schema.TargetType;
+import org.mapstruct.*;
 
-    public Customer toEntity(CustomerDto customerDto) {
-        return new Customer();
-    }
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.WARN)
+public interface CustomerMapper {
+    CustomerDto customerToDto(Customer customer);
+    Customer toEntityDto(CustomerDto customerDto);
 }

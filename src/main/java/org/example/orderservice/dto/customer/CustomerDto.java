@@ -1,18 +1,16 @@
 package org.example.orderservice.dto.customer;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
 @Setter
 @Getter
-@Component
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 public class CustomerDto {
     private Long id;
     private String name;
